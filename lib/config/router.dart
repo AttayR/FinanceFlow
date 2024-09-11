@@ -6,16 +6,24 @@ import 'package:manage_loan/screens/dashbord/search_loan/search_loan_screen.dart
 import 'package:manage_loan/screens/dashbord/view_loan/view_loan_screen.dart';
 import 'package:manage_loan/screens/privacy_policy_screen.dart';
 import 'package:manage_loan/screens/splash_screen.dart';
+import 'package:manage_loan/screens/name_input_screen.dart';  // Import the name input screen
 
 final router = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) => const SplashScreen(),  // SplashScreen will handle the routing logic
     ),
-    GoRoute(path: '/search_loan', builder: (context,state) => const SearchLoanScreen(),),
- GoRoute(
+    GoRoute(
+      path: '/name_input',
+      builder: (context, state) => const NameInputScreen(),  // Route for the Name Input Screen
+    ),
+    GoRoute(
+      path: '/search_loan',
+      builder: (context, state) => const SearchLoanScreen(),
+    ),
+    GoRoute(
       path: '/privacy_policy',
       builder: (context, state) => const PrivacyPolicyScreen(),
     ),
@@ -24,7 +32,7 @@ final router = GoRouter(
       routes: [
         GoRoute(
           path: '/loan_dashbord',
-          builder: (context, state) => const LoanDashbord(),
+          builder: (context, state) => const LoanDashbord(),  // Route for the Loan Dashboard
         ),
         GoRoute(
           path: '/add_loan',

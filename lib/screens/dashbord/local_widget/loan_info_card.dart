@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:manage_loan/config/extension.dart';
 import 'package:manage_loan/enum/enums.dart';
 import 'package:manage_loan/styles/colors.dart';
 import 'package:manage_loan/styles/theme.dart';
@@ -29,58 +28,85 @@ class LoanInfoCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 200,
-        width: 150,
-        margin: const EdgeInsets.only(right: 10),
-        padding: const EdgeInsets.all(10),
+        width: 260, // Increased width for better readability
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: primaryColor,
+          borderRadius: BorderRadius.circular(12),
+          gradient: LinearGradient(
+            colors: [primaryColor, Colors.white24.withOpacity(0.1)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Icon(
-                  Icons.outbond,
+                  isLoaned ? Icons.arrow_upward : Icons.arrow_downward,
                   color: isLoaned ? redColor : greenColor,
+                  size: 24,
                 ),
-                Expanded(
-                  child: Text(
-                    loanAmount,
-                    textAlign: TextAlign.right,
-                    style: AppTheme.subTitleStyle(color: whiteColor),
-                    overflow: TextOverflow.ellipsis, 
+                Text(
+                  '\$$loanAmount',
+                  style: AppTheme.subTitleStyle(
+                    color: blackColor,
+                 
                   ),
                 ),
               ],
             ),
-            const Spacer(),
+            const SizedBox(height: 12),
             Text(
               loanName,
-              style: AppTheme.titleStyle(isBold: true, color: whiteColor),
-              overflow: TextOverflow.ellipsis,  
-            ),
-            Text(
-              loanType == LoanType.LoanGivenByMe ? 'Loaned to' : 'Borrowed from', // Display loan type
-              style: AppTheme.titleStyle(isBold: true, color: whiteColor),
+              style: AppTheme.titleStyle(
+                color: blackColor,
+                
+              ),
               overflow: TextOverflow.ellipsis,
             ),
+            const SizedBox(height: 4),
             Text(
-              fullName.ellipsis(),
-              style: AppTheme.titleStyle(isBold: true, color: whiteColor),
-              overflow: TextOverflow.ellipsis, 
+              loanType == LoanType.LoanGivenByMe ? 'Loaned to' : 'Borrowed from',
+              style: AppTheme.subTitleStyle(
+                color: Colors.red,
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
+            const SizedBox(height: 4),
             Text(
-              "On",
-              style: AppTheme.titleStyle(color: whiteColor),
-              overflow: TextOverflow.ellipsis, 
+              fullName,
+              style: AppTheme.subTitleStyle(
+                color: blackColor,
+                
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Date:',
+              style: AppTheme.subTitleStyle(
+                color: Colors.blueGrey,
+              ),
             ),
             Text(
               incurredDate,
-              style: AppTheme.titleStyle(isBold: true, color: whiteColor),
-              overflow: TextOverflow.ellipsis,  
+              style: AppTheme.subTitleStyle(
+                color: blackColor,
+                
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manage_loan/config/constant.dart';
 import 'package:manage_loan/styles/theme.dart';
@@ -33,11 +34,21 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void _navigate() {
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {  
-        GoRouter.of(context).go('/loan_dashbord');
+  void _navigate() async {
+    // Delay to simulate splash screen
+    await Future.delayed(const Duration(seconds: 3));
+    
+    // Check if the user's name is stored in SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isNameSaved = prefs.containsKey('userName');
+
+    // Navigate based on the presence of the name
+    if (mounted) {
+      if (isNameSaved) {
+        GoRouter.of(context).go('/loan_dashbord'); // If name is stored, go to Loan Dashboard
+      } else {
+        GoRouter.of(context).go('/name_input');    // If name is not stored, go to Name Input Screen
       }
-    });
+    }
   }
 }

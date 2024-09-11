@@ -1,3 +1,3 @@
-const double titleSize = 16;
-const double subTitltSize = 12;
+const double titleSize = 17;
+const double subTitltSize = 15;
 const double headerSize = 20;
