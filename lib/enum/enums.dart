@@ -1,1 +1,2 @@
-enum LoanType {LoanOwedByMe,LoanGivenByMe, LoanReceivedByMe}
+enum LoanType {LoanOwedByMe,LoanGivenByMe,givenOut,
+  received,}

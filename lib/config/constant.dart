@@ -1,1 +1,1 @@
-String appName = 'Money Track';
+String appName = 'FinanceFlow';

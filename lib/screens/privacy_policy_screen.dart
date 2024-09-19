@@ -23,12 +23,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Privacy Policy for Money Track App',
+                'Privacy Policy for FinanceFlow',
                 style: AppTheme.headerStyle(),
               ),
               16.height(),
               Text(
-                'Welcome to Money Track! Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our application. Please read this policy carefully. If you do not agree with the terms of this privacy policy, please do not access the application.',
+                'Welcome to FinanceFlow! Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our application. Please read this policy carefully. If you do not agree with the terms of this privacy policy, please do not access the application.',
                 style: AppTheme.titleStyle(),
               ),
               16.height(),
@@ -37,7 +37,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 style: AppTheme.headerStyle(),
               ),
               Text(
-                'We collect personal information such as your full name, contact number, loan start date, end date, and the amount of the loan. This information is collected when you register or enter loan details into the app.',
+                'We collect personal information such as your full name, contact number, loan start date, end date, and the amount of the loan. This information is collected when you register or enter loan details into the app. This data helps us manage and track your loans effectively.',
                 style: AppTheme.titleStyle(),
               ),
               16.height(),
@@ -46,7 +46,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 style: AppTheme.headerStyle(),
               ),
               Text(
-                'The information collected is used to manage and track your loans, including recording and displaying loan details, processing transactions, and providing you with relevant notifications and updates.',
+                'The information collected is used to manage and track your loans, including recording and displaying loan details, processing transactions, and providing you with relevant notifications and updates. This helps you keep an accurate record of your financial activities.',
                 style: AppTheme.titleStyle(),
               ),
               16.height(),
@@ -64,7 +64,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 style: AppTheme.headerStyle(),
               ),
               Text(
-                'Your personal information is retained for as long as necessary to fulfill the purposes outlined in this policy or as required by law. You can request to delete your data at any time by contacting us.',
+                'Your personal information is retained for as long as necessary to fulfill the purposes outlined in this policy or as required by law. You can request to delete your data at any time by contacting us through the app or via email.',
                 style: AppTheme.titleStyle(),
               ),
               16.height(),
@@ -82,7 +82,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 style: AppTheme.headerStyle(),
               ),
               Text(
-                'You have the right to access, correct, or delete your personal information. You can update your information through the app settings or by contacting us directly.',
+                'You have the right to access, correct, or delete your personal information. You can update your information through the app settings or by contacting us directly. We will respond to your requests as promptly as possible.',
                 style: AppTheme.titleStyle(),
               ),
               16.height(),
@@ -91,7 +91,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 style: AppTheme.headerStyle(),
               ),
               Text(
-                'We use cookies and other tracking technologies to enhance your experience with the app. You can manage your cookie preferences through your device settings.',
+                'We use cookies and other tracking technologies to enhance your experience with the app and to collect usage data for improving functionality. You can manage your cookie preferences through your device settings.',
                 style: AppTheme.titleStyle(),
               ),
               16.height(),
@@ -100,7 +100,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 style: AppTheme.headerStyle(),
               ),
               Text(
-                'We may update this privacy policy from time to time. We will notify you of any significant changes by posting the new policy on the app. Your continued use of the app after such changes constitutes your acceptance of the updated policy.',
+                'We may update this privacy policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any significant changes by posting the new policy on the app. Your continued use of the app after such changes constitutes your acceptance of the updated policy.',
                 style: AppTheme.titleStyle(),
               ),
               16.height(),
@@ -109,7 +109,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 style: AppTheme.headerStyle(),
               ),
               Text(
-                'If you have any questions or concerns about this privacy policy or how we handle your personal information, please contact us at [Insert Contact Information].',
+                'If you have any questions or concerns about this privacy policy or how we handle your personal information, please contact us at support@financeflow.com.',
                 style: AppTheme.titleStyle(),
               ),
               16.height(),

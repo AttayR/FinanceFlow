@@ -41,11 +41,11 @@ class _BottomTabNavigatorState extends State<BottomTabNavigator> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
-            label: 'Add Loan',
+            label: 'Add New Loan',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'View Loan',
+            label: 'Loan History',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -47,23 +47,24 @@ class _LoanDashbordState extends State<LoanDashbord> {
       _userName = prefs.getString('userName');
     });
   }
+
   Future<void> _loadLoans() async {
-  final prefs = await SharedPreferences.getInstance();
-  final loanDataString = prefs.getString('loanData') ?? '[]';
-  
-  try {
-    final List<dynamic> decodedData = jsonDecode(loanDataString);
-    setState(() {
-      pendingLoans = List<Map<String, String>>.from(
-        decodedData.map((loan) => Map<String, String>.from(loan)),
-      );
-    });
-  } catch (e) {
-    setState(() {
-      pendingLoans = [];
-    });
+    final prefs = await SharedPreferences.getInstance();
+    final loanDataString = prefs.getString('loanData') ?? '[]';
+
+    try {
+      final List<dynamic> decodedData = jsonDecode(loanDataString);
+      setState(() {
+        pendingLoans = List<Map<String, String>>.from(
+          decodedData.map((loan) => Map<String, String>.from(loan)),
+        );
+      });
+    } catch (e) {
+      setState(() {
+        pendingLoans = [];
+      });
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,8 @@ class _LoanDashbordState extends State<LoanDashbord> {
         backgroundColor: primaryColor,
         title: Text(
           _userName != null ? 'Hello, $_userName!' : 'Loan Dashboard',
-          style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+          style:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
@@ -99,15 +101,12 @@ class _LoanDashbordState extends State<LoanDashbord> {
                   const CircleAvatar(
                     radius: 30,
                     backgroundColor: whiteColor,
-                    child: Icon(
-                      Icons.account_circle,
-                      size: 40,
-                      color: primaryColor,
-                    ),
+                    backgroundImage: AssetImage(
+                        'assets/images/logo.png'), // Replace with your image path
                   ),
                   const SizedBox(width: 16),
                   Text(
-                    'Lendify',
+                    'FinanceFlow',
                     style: AppTheme.headerStyle(color: whiteColor),
                   ),
                 ],
@@ -135,7 +134,7 @@ class _LoanDashbordState extends State<LoanDashbord> {
                   ),
                   _buildDrawerItem(
                     icon: Icons.visibility,
-                    text: 'View Loan',
+                    text: 'Loan History',
                     onTap: () {
                       Navigator.pop(context);
                       context.push('/view_loan');
@@ -151,16 +150,10 @@ class _LoanDashbordState extends State<LoanDashbord> {
                   ),
                   _buildDrawerItem(
                     icon: Icons.settings,
-                    text: 'Settings',
+                    text: 'Edit Finance Summary',
                     onTap: () {
                       Navigator.pop(context);
-                    },
-                  ),
-                  _buildDrawerItem(
-                    icon: Icons.info,
-                    text: 'About Us',
-                    onTap: () {
-                      Navigator.pop(context);
+                      context.push('/edit_financial_summary');
                     },
                   ),
                 ],
@@ -181,9 +174,8 @@ class _LoanDashbordState extends State<LoanDashbord> {
               style: AppTheme.titleStyle(
                 color: blackColor,
               ),
-              textAlign: TextAlign.center, 
+              textAlign: TextAlign.center,
             ),
-
             20.height(),
             Container(
               padding: const EdgeInsets.all(16),
@@ -256,62 +248,59 @@ class _LoanDashbordState extends State<LoanDashbord> {
                 ),
               ),
             ),
-
             10.height(),
             Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                  'Loans',
-                  style: AppTheme.headerStyle(
-                    color: blackColor,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(
+                    'Loans',
+                    style: AppTheme.headerStyle(
+                      color: blackColor,
+                    ),
                   ),
                 ),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Row(
-                  children: pendingLoans.isEmpty
-                      ? [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20.0),
-                            child: Text(
-                              'No pending loans available.',
-                              style: AppTheme.titleStyle(
-                                color: Colors.grey[600]!,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Row(
+                    children: pendingLoans.isEmpty
+                        ? [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 20.0),
+                              child: Text(
+                                'No pending loans available.',
+                                style: AppTheme.titleStyle(
+                                  color: Colors.grey[600]!,
+                                ),
                               ),
                             ),
-                          ),
-                        ]
-                      : pendingLoans.map((loan) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 10.0),
-                            child: LoanInfoCard(
-                              loanAmount: loan['loanAmount'] ?? '',
-                              loanName: loan['loanName'] ?? '',
-                              loanType: LoanType.values.firstWhere(
-                                (e) => e.name == loan['loanType'],
-                                orElse: () => LoanType.LoanGivenByMe,
+                          ]
+                        : pendingLoans.map((loan) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: LoanInfoCard(
+                                loanAmount: loan['loanAmount'] ?? '',
+                                loanName: loan['loanName'] ?? '',
+                                loanType: LoanType.values.firstWhere(
+                                  (e) => e.name == loan['loanType'],
+                                  orElse: () => LoanType.LoanGivenByMe,
+                                ),
+                                fullName: loan['fullName'] ?? '',
+                                incurredDate: loan['incurredDate'] ?? '',
+                                isLoaned: true,
+                                onTap: () {
+                                  context.push('/view_loan');
+                                },
                               ),
-                              fullName: loan['fullName'] ?? '',
-                              incurredDate: loan['incurredDate'] ?? '',
-                              isLoaned: true,
-                              onTap: () {
-                                context.push('/view_loan');
-                              },
-                            ),
-                          );
-                        }).toList(),
+                            );
+                          }).toList(),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        
-
-           
+              ],
+            ),
           ],
         ),
       ),

@@ -108,7 +108,7 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
                       elevation: 5,
                     ),
                     child: const Text(
-                      'Print Loan List',
+                      'Print Loan History',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),

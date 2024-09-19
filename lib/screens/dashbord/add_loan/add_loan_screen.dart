@@ -10,7 +10,6 @@ import 'package:manage_loan/styles/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-
 class AddLoanScreen extends StatefulWidget {
   const AddLoanScreen({super.key});
 
@@ -55,39 +54,61 @@ class _AddLoanScreenState extends State<AddLoanScreen> {
     super.dispose();
   }
 
-Future<void> _saveLoanData() async {
-  final prefs = await SharedPreferences.getInstance();
+  Future<void> _saveLoanData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final existingLoansString = prefs.getString('loanData') ?? '[]';
+    List<dynamic> existingLoans;
+    try {
+      existingLoans = jsonDecode(existingLoansString);
+    } catch (e) {
+      existingLoans = [];
+      print('Error decoding existing loans JSON: $e');
+    }
+    final newLoan = {
+      'loanName': _loanNameController.text,
+      'loanAmount': _loanAmountController.text,
+      'loanCurrency': currency?.code ?? '',
+      'incurredDate': _incurredDateController.text,
+      'dueDate': _dueDateController.text,
+      'fullName': _fullNameController.text,
+      'phoneNumber': _phoneNumberController.text,
+      'loanType': _selectedLoanType?.name ?? '',
+      'selectedLoanName': _selectedLoanName ?? '',
+    };
 
-  // Get the existing loans or initialize an empty list if none exists
-  final existingLoansString = prefs.getString('loanData') ?? '[]';
-  List<dynamic> existingLoans;
+    existingLoans.add(newLoan);
+    await prefs.setString('loanData', jsonEncode(existingLoans));
 
-  try {
-    existingLoans = jsonDecode(existingLoansString);
-  } catch (e) {
-    existingLoans = [];
-    print('Error decoding existing loans JSON: $e');
+    _showUpdateFinancialSummaryDialog();
   }
 
-  // Create a new loan object
-  final newLoan = {
-    'loanName': _loanNameController.text,
-    'loanAmount': _loanAmountController.text,
-    'loanCurrency': currency?.code ?? '',
-    'incurredDate': _incurredDateController.text,
-    'dueDate': _dueDateController.text,
-    'fullName': _fullNameController.text,
-    'phoneNumber': _phoneNumberController.text,
-    'loanType': _selectedLoanType?.name ?? '',
-    'selectedLoanName': _selectedLoanName ?? '',
-  };
-
-  // Add the new loan to the list
-  existingLoans.add(newLoan);
-
-  // Save the updated list back to SharedPreferences
-  await prefs.setString('loanData', jsonEncode(existingLoans));
-}
+  void _showUpdateFinancialSummaryDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Update Financial Summary'),
+          content: const Text('You need to update the financial summary.'),
+          actions: [
+            TextButton(
+              child: const Text('Update Now'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                GoRouter.of(context).go('/edit_financial_summary'); // Navigate to EditFinancialSummaryScreen
+              },
+            ),
+            TextButton(
+              child: const Text('Later'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                GoRouter.of(context).go('/view_loan'); // Navigate to ViewLoanScreen
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   bool _isFormValid() {
     return _loanNameController.text.isNotEmpty &&
@@ -106,7 +127,7 @@ Future<void> _saveLoanData() async {
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text(
-          'Add Loan',
+          'Add New Loan',
           style: AppTheme.headerStyle(color: whiteColor),
         ),
       ),
@@ -134,13 +155,6 @@ Future<void> _saveLoanData() async {
                   onPressed: () async {
                     if (_isFormValid()) {
                       await _saveLoanData();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text('Your request has been sent correctly.'),
-                        ),
-                      );
-                      GoRouter.of(context).go('/view_loan'); // Navigate to ViewLoanScreen
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -149,7 +163,7 @@ Future<void> _saveLoanData() async {
                       );
                     }
                   },
-                  text: 'Send Request',
+                  text: 'Add Loan',
                 ),
               ],
             ),
@@ -159,7 +173,7 @@ Future<void> _saveLoanData() async {
     );
   }
 
-    Widget _buildDateFields() {
+  Widget _buildDateFields() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -221,6 +235,7 @@ Future<void> _saveLoanData() async {
       ],
     );
   }
+
   Widget _buildCreditorDetails() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -308,7 +323,7 @@ Future<void> _saveLoanData() async {
     );
   }
 
-  Widget _buildAmountAndCurrency() {
+   Widget _buildAmountAndCurrency() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -336,8 +351,6 @@ Future<void> _saveLoanData() async {
       ],
     );
   }
- }
-
-
+}
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manage_loan/screens/dashbord/loan_dashbord.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:manage_loan/styles/colors.dart';
 import 'package:manage_loan/styles/theme.dart';
@@ -34,14 +35,20 @@ class _EditFinancialSummaryScreenState
     });
   }
 
-  // Save financial summary to SharedPreferences
   Future<void> _saveFinancialSummary() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('loansGiven', _loansGivenController.text);
     await prefs.setString('loansReceived', _loansReceivedController.text);
     await prefs.setString('netBalance', _netBalanceController.text);
-    Navigator.pop(context); // Navigate back after saving
+    
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoanDashbord()), // Ensure LoanDashbord is correctly imported
+      );
+    }
   }
+
 
   @override
   void dispose() {
@@ -148,7 +155,7 @@ class _EditFinancialSummaryScreenState
                 const SizedBox(height: 20),
 
                 // Additional reminder
-                Text(
+                const Text(
                   'Remember to save your changes before leaving this screen.',
                   style: TextStyle(color: Colors.redAccent, fontStyle: FontStyle.italic),
                   textAlign: TextAlign.center,

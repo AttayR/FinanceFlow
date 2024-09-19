@@ -183,7 +183,7 @@ class _SearchLoanScreenState extends State<SearchLoanScreen> {
     setState(() {
       _searchQuery = query;
       _filteredLoans = _loanList.where((loan) {
-        final loanName = loan['loanName']?.toLowerCase() ?? '';
+        final loanName = loan['fullName']?.toLowerCase() ?? '';
         return loanName.contains(_searchQuery);
       }).toList();
     });
